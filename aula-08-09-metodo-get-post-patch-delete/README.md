@@ -1,23 +1,34 @@
-## Atualização — Métodos de manipulação de convidados
+# Aulas 08 e 09 — API com NestJS
 
-Nesta etapa da Aula 09, o projeto foi evoluído com a implementação de novas funcionalidades no `ConvidadosService`, permitindo realizar operações de consulta, atualização e remoção de convidados.
+## Introdução
 
-### Funcionalidades implementadas
+Nas Aulas 08 e 09 foi desenvolvido e aprimorado um projeto de API utilizando o **NestJS**, framework baseado em Node.js e desenvolvido com TypeScript.
 
-Foram adicionados os seguintes métodos:
+O objetivo dessas aulas foi compreender, na prática, como funciona a estrutura de uma aplicação backend, desde a criação do projeto até a implementação de rotas responsáveis por realizar operações de consulta, criação, atualização e exclusão de dados.
 
-- **`listarConvidados()`**: retorna a lista de convidados cadastrados.
-- **`encontrarConvidado(id)`**: busca um convidado pelo seu ID.
-- **`atualizarIdade(id, idade)`**: localiza um convidado e atualiza sua idade.
-- **`removerConvidadoLista(id)`**: localiza o convidado pelo ID e remove seu registro da lista.
+Durante o desenvolvimento, foram trabalhados conceitos importantes da arquitetura do NestJS, como **Controllers, Services, Modules, DTOs, injeção de dependências, métodos HTTP e tratamento de exceções**.
 
-### Tratamento de erros
+O projeto desenvolvido utiliza uma lista de convidados armazenada em memória para simular o funcionamento de uma aplicação que futuramente poderia estar conectada a um banco de dados.
 
-Foi utilizado o `NotFoundException` do NestJS para tratar situações em que um convidado não é encontrado.
+---
 
-Quando o ID informado não existe, a aplicação retorna uma exceção informando que o convidado não foi encontrado:
+# Aula 08 — Métodos HTTP e estrutura da API
 
-```typescript
-throw new NotFoundException(
-  `[ADMINISTRADOR] Convidado com ID ${id} não encontrado!`
-);
+Na Aula 08 foi iniciada a implementação da API utilizando o NestJS.
+
+O foco principal foi compreender como uma aplicação backend recebe requisições HTTP e como os Controllers e Services trabalham em conjunto para processar essas requisições.
+
+## Estrutura da aplicação
+
+O projeto foi organizado utilizando a estrutura padrão do NestJS:
+
+```text
+src/
+├── app.controller.spec.ts
+├── app.controller.ts
+├── app.module.ts
+├── app.service.ts
+├── convidados.controller.ts
+├── convidados.service.ts
+├── criar-convidado.dto.ts
+└── main.ts

@@ -24,7 +24,7 @@ export class ImagemController{
             fileFilter:(req, file, callback) => {
                 if(!file.mimetype.match(/\/(jpg|jpeg|png|gif|webp)$/)){
                     return callback(
-                        new BadRequestException('Apenas arquivos jpg, jpeg, png, gof e webp'),
+                        new BadRequestException('Apenas arquivos jpg, jpeg, png, gof e webp são suportados'),
                         false,
                     );
                 }

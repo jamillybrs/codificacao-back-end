@@ -4,18 +4,23 @@ import { Controller,
          Body,
          Patch,
          Param,
-         Delete } from "@nestjs/common";
+         Delete,
+        Query,
+    DefaultValuePipe,
+ParseIntPipe } from "@nestjs/common";
 import { AlunosService } from "./alunos.service.js";
 import { CreateAlunoDto } from "./dto/create-aluno.dto.js";
 import { UpdateAlunoDto } from "./dto/update-aluno.dto.js";
 import { ApiTags, 
          ApiOperation, 
-         ApiResponse } from '@nestjs/swagger';
+         ApiResponse,
+       ApiQuery,
+    } from '@nestjs/swagger';
 
 @ApiTags('alunos')         
 @Controller('alunos')
 export class AlunosController {
-    constructor(private readonly alunoService : AlunosService){}
+    constructor(private readonly alunosService : AlunosService){}
     
     @Post()
     @ApiOperation({
@@ -31,22 +36,95 @@ export class AlunosController {
     })
 
     create(@Body() createAlunoDto:CreateAlunoDto){
-        return this.alunoService.create(createAlunoDto);
+        return this.alunosService.create(createAlunoDto);
     }
+
+
     @Get()
-    findAll(){
-        return this.alunoService.findAll();
-    }
-    @Get(':id')
-    findOne(@Param('id') id: string){
-        return this.alunoService.findOne(id);
-    }
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateAlunoDto: UpdateAlunoDto){
-        return this.alunoService.update(id, updateAlunoDto);
-    }
-    @Delete(':id')
-    remove(@Param('id') id: string){
-        return this.alunoService.remove(id);
-    }
+    @ApiOperation({
+        summary:'Listar todos os alunos',
+    })
+        @ApiResponse({
+            status:200,
+            description:'Lista de alunos retonarda com sucesso',
+        })
+        @ApiResponse({
+            status:404,
+            description:'Nenhum aluno encontrado',
+        })
+
+        //findAll(){
+        //return this.alunoService.findAll();
+        //}
+
+        @Get()
+        @ApiOperation({
+            summary: 'Listar alunos com paginação',
+
+        })
+
+        @ApiResponse({
+            status:500,
+            description:'Erro interno no servidor',
+        })
+
+@ApiQuery({
+    name:'page',
+    required: false,
+    type: Number,
+    description: 'Númerosde página (padrão: 1)',
+})
+
+@ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'número de itens por página (padrão 10)',
+
+})
+
+
+findPage(){}
+
+@Get(':id')
+@ApiOperation({
+    summary: 'Obter detalhes de um aluno espeífico',
+})
+
+
+
+@ApiResponse({
+    status: 200,
+    description: 'Aluno específico encontrado',
+    
+})
+
+@ApiResponse({
+    status: 404,
+    description: 'Aluno não encontrado',
+    
+})
+
+
+updateAlunoDto(@Param('id') id: string, @Body() updateAlunoDto : UpdateAlunoDto){
+     return this.alunosService.update(id, updateAlunoDto);
 }
+
+  @Delete(':id')
+@ApiOperation({
+summary: 'Remover um aluno específico',
+})
+
+@ApiResponse({
+status:200,
+description: 'Aluno removido com sucesso',
+})
+
+@ApiResponse({
+status:404,
+description: 'Aluno não encontado',
+})
+remove(@Param('id') id: string){
+ return this.alunosService.remove(id);
+}
+};

@@ -165,7 +165,28 @@ description: 'Aluno removido com sucesso',
 status:404,
 description: 'Aluno não encontado',
 })
-remove(@Param('id') id: string){
- return this.alunosService.remove(id);
+
+
+@Patch(':id/restaurar')
+@ApiOperation({
+    summary: 'Restaturar um aluno específico removido por Soft Delete',
+})
+
+@ApiResponse({
+    status: 200,
+    description: 'Aluno restaurado com sucesso',
+})
+
+@ApiResponse({
+    status: 404,
+    description: 'Aluno não encontrado',
+})
+
+    @ApiResponse({
+    status: 500,
+    description:'Erro interno no servidor',
+})
+restore(@Param('id') id: string){
+ return this.alunosService.restore(id);
 }
-};
+}

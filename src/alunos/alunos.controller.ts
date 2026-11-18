@@ -24,7 +24,7 @@ export class AlunosController {
     
     @Post()
     @ApiOperation({
-        summary: 'Cria a matrícula do aluno',
+        summary: 'Criar a matrícula do aluno',
     })
     @ApiResponse({
         status: 201,
@@ -151,42 +151,23 @@ updateAlunoDto(@Param('id') id: string, @Body() updateAlunoDto : UpdateAlunoDto)
      return this.alunosService.update(id, updateAlunoDto);
 }
 
-  @Delete(':id')
-@ApiOperation({
-summary: 'Remover um aluno específico',
-})
-
-@ApiResponse({
-status:200,
-description: 'Aluno removido com sucesso',
-})
-
-@ApiResponse({
-status:404,
-description: 'Aluno não encontado',
-})
-
+ 
+@Delete(':id')
+@ApiOperation({ summary: 'Remover um aluno específico' })
+@ApiResponse({ status: 200, description: 'Aluno removido com sucesso' })
+@ApiResponse({ status: 404, description: 'Aluno não encontrado' })
+remove(@Param('id') id: string) {
+  return this.alunosService.remove(id);
+}
 
 @Patch(':id/restaurar')
-@ApiOperation({
-    summary: 'Restaturar um aluno específico removido por Soft Delete',
-})
-
-@ApiResponse({
-    status: 200,
-    description: 'Aluno restaurado com sucesso',
-})
-
-@ApiResponse({
-    status: 404,
-    description: 'Aluno não encontrado',
-})
-
-    @ApiResponse({
-    status: 500,
-    description:'Erro interno no servidor',
-})
-restore(@Param('id') id: string){
- return this.alunosService.restore(id);
+@ApiOperation({ summary: 'Restaurar um aluno específico removido por Soft Delete' })
+@ApiResponse({ status: 200, description: 'Aluno restaurado com sucesso' })
+@ApiResponse({ status: 404, description: 'Aluno não encontrado' })
+@ApiResponse({ status: 500, description: 'Erro interno no servidor' })
+restore(@Param('id') id: string) {
+  return this.alunosService.restore(id);
 }
+
+
 }
